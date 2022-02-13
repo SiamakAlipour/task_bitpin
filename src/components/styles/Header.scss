@@ -1,0 +1,32 @@
+.header {
+	background-color: #141414;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	color: white;
+	padding: 8px 0px 0px 8px;
+	&__title {
+		margin-right: 12px;
+	}
+	&__menu {
+		display: flex;
+		align-items: center;
+		list-style: none;
+		margin-top: 15px;
+
+		> li {
+			padding: 8px 15px;
+
+			a {
+				color: white;
+				text-decoration: none;
+			}
+			&:hover {
+				background-color: whitesmoke;
+				a {
+					color: #212121;
+				}
+			}
+		}
+	}
+}
