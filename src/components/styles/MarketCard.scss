@@ -1,2 +1,50 @@
 .marketCard {
+	background-color: #eeeeee;
+	width: 400px !important;
+	height: 200px !important;
+	margin: 10px;
+	border-radius: 5px;
+	padding: 10px;
+	position: relative;
+	transition: 0.4s;
+
+	&:hover {
+		transform: scale(1.005);
+	}
+	&__title {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-weight: 600;
+		// color: whitesmoke;
+	}
+	&__footer {
+		width: 100%;
+		position: absolute;
+		bottom: 6px;
+		left: 0px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		padding: 0 5px;
+		&MarketList {
+			margin-top: 15px;
+			margin-right: 15px;
+			font-size: 13px;
+			font-weight: 490;
+
+			a {
+				color: #212121 !important;
+				text-decoration: none;
+			}
+			cursor: pointer;
+		}
+	}
+}
+@media screen and (max-width: 770px) {
+	.marketCard {
+		width: 300px !important;
+		height: 150px !important;
+	}
 }

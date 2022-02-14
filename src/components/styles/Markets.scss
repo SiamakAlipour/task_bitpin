@@ -1,2 +1,13 @@
 .markets {
+	margin-top: 20px;
+	display: grid;
+	place-items: center;
+	> nav {
+		direction: ltr;
+		background-color: #eeeeee;
+		border-radius: 12px;
+		padding: 5px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
 }

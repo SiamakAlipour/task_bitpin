@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 function Header() {
 	return (
-		<div className='header'>
+		<header className='header'>
 			<h2 className='header__title'>مینی صرافی</h2>
 			<ul className='header__menu'>
 				<li>
@@ -12,13 +12,13 @@ function Header() {
 				</li>
 
 				<li>
-					<Link to='/markets'>مارکت ها</Link>
+					<Link to='/likedMarkets'>مارکت ها</Link>
 				</li>
 				<li>
 					<Link to='/charts'>نمودار ها</Link>
 				</li>
 			</ul>
-		</div>
+		</header>
 	)
 }
 

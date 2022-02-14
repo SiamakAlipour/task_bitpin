@@ -13,10 +13,10 @@
 		align-items: center;
 		list-style: none;
 		margin-top: 15px;
-
+		margin-bottom: 0;
 		> li {
 			padding: 8px 15px;
-
+			transition: 0.2s;
 			a {
 				color: white;
 				text-decoration: none;
