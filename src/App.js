@@ -5,9 +5,8 @@ import _404 from './components/_404'
 import Home from './components/Home'
 import Markets from './components/Markets'
 import Transactions from './components/Transactions'
-import { useParams } from 'react-router-dom'
 function App() {
-	let params = useParams()
+
 	return (
 		<div className='app'>
 			<Header />
