@@ -4,7 +4,12 @@ import axios from '../service/axios'
 import MarketCard from './MarketCard'
 import { Audio } from 'react-loader-spinner'
 import Pagination from '@mui/material/Pagination'
+import { getCookie } from '../service/cookies'
+import { useDispatch, useSelector } from 'react-redux'
+import { getFav } from '../store/actions/fav'
 function Markets() {
+	const dispatch = useDispatch()
+	const fav = useSelector((state) => state.fav)
 	const [markets, setMarkets] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
@@ -30,6 +35,10 @@ function Markets() {
 	const currentPosts = markets?.slice(indexOfFirstPost, indexOfLastPost)
 	// metrial ui pagination func
 	const paginate = (event, value) => setCurrentPage(value)
+	React.useEffect(() => {
+		dispatch(getFav())
+		console.log('hello', fav)
+	}, [])
 	return (
 		<div className='container markets'>
 			{loading ? (
@@ -41,6 +50,7 @@ function Markets() {
 						{currentPosts.map((market) => (
 							<MarketCard
 								key={market.id}
+								id={market.id}
 								code={market.code}
 								price={market.price}
 								price_info={market.price_info}
