@@ -12,7 +12,7 @@ function Header() {
 				</li>
 
 				<li>
-					<Link to='/likedMarkets'>مارکت ها</Link>
+					<Link to='/likedMarkets'>مارکت های مورد علاقه</Link>
 				</li>
 				<li>
 					<Link to='/charts'>نمودار ها</Link>
