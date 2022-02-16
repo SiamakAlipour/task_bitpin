@@ -12,8 +12,9 @@ const favReducer = (state = initialState, action) => {
 		case FAV_GET:
 			return state
 		case FAV_REMOVE:
-			return state.filter((item) => item.id !== payload.id)
-		// return setCookie('fav', [...state]))
+			let filteredArray = state.filter((item) => item.id !== payload.id)
+			setCookie('fav', [...filteredArray])
+			return filteredArray
 		default:
 			return state
 	}
