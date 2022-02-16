@@ -7,7 +7,9 @@
 	padding: 10px;
 	position: relative;
 	transition: 0.4s;
-
+	&.liked {
+		background-color: #ffcdd2;
+	}
 	&:hover {
 		transform: scale(1.005);
 	}

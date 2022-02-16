@@ -15,19 +15,21 @@ function MarketCard({
 	title,
 	title_fa,
 	tradable,
+	market,
+	isLiked,
 }) {
-	const [liked, setLiked] = useState(false)
+	const [liked, setLiked] = useState(isLiked)
 	const dispatch = useDispatch()
 	const handleLike = () => {
 		setLiked(true)
-		dispatch(addFav({ code, price, price_info, title, title_fa, tradable }))
+		dispatch(addFav({ id, code }))
 	}
 	const handleDisLike = () => {
 		setLiked(false)
 		dispatch(removeFav(id))
 	}
 	return (
-		<div className='marketCard'>
+		<div className={`marketCard ${isLiked && 'liked'}`}>
 			<div className='marketCard__title'>
 				<p>{title_fa}</p>
 				<p>{title}</p>
