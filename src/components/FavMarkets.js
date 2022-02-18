@@ -21,17 +21,17 @@ function FavMarkets() {
 		console.log('hello', fav)
 	}, [])
 	useEffect(() => {
-		setFavLoading(false)
 		fav.map((fav) =>
 			markets.find((market) => {
 				if (!favMarkets?.includes(market) && market.code === fav.code)
 					setFavMarkets([...favMarkets, market])
 			})
 		)
+		if (favMarkets) setFavLoading(false)
 	}, [markets])
 	return (
 		<div className='container markets'>
-			{loadingMarket ? (
+			{favLoading ? (
 				<Audio height='100' width='100' color='grey' ariaLabel='loading' />
 			) : (
 				<>

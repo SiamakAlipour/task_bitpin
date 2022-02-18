@@ -13,16 +13,7 @@ function Markets() {
 	const [loadingMarket, setLoadingMarket] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [postPerPage] = useState(9)
-	const fetchData = async () => {
-		await axios
-			.get('/mkt/markets')
-			.then((res) => {
-				setMarkets(res.data.results)
-				setLoadingMarket(false)
-				console.log('markets', markets)
-			})
-			.catch((err) => console.log(err))
-	}
+	const fetchData = async () => {}
 	useEffect(() => {
 		fetchData()
 	}, [])
