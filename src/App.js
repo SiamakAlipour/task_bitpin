@@ -5,8 +5,8 @@ import _404 from './components/_404'
 import Home from './components/Home'
 import Markets from './components/Markets'
 import Transactions from './components/Transactions'
+import FavMarkets from './components/FavMarkets'
 function App() {
-
 	return (
 		<div className='app'>
 			<Header />
@@ -14,7 +14,7 @@ function App() {
 				<Route path='/' element={<Markets />} />
 				<Route path='/markets/:code' element={<Transactions />} />
 
-				<Route path='/likedMarkets' element={<Markets />} />
+				<Route path='/favMarkets' element={<FavMarkets />} />
 				<Route path='*' element={<_404 />} />
 			</Routes>
 		</div>

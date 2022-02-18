@@ -1,57 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import './styles/Markets.scss'
-import axios from '../service/axios'
+
 import MarketCard from './MarketCard'
 import { Audio } from 'react-loader-spinner'
 import Pagination from '@mui/material/Pagination'
-
 import { useDispatch, useSelector } from 'react-redux'
 
-function Markets() {
-	const dispatch = useDispatch()
-	const [markets, setMarkets] = useState([])
-	const [loadingMarket, setLoadingMarket] = useState(true)
+function FavMarkets() {
+	const fav = useSelector((state) => state.fav)
+	const markets = useSelector((state) => state.markets)
+	const [favLoading, setFavLoading] = useState(true)
+	const [favMarkets, setFavMarkets] = useState([])
 	const [currentPage, setCurrentPage] = useState(1)
 	const [postPerPage] = useState(9)
-	const fetchData = async () => {
-		await axios
-			.get('/mkt/markets')
-			.then((res) => {
-				setMarkets(res.data.results)
-				setLoadingMarket(false)
-				console.log('markets', markets)
-			})
-			.catch((err) => console.log(err))
-	}
-	useEffect(() => {
-		fetchData()
-	}, [])
-	useEffect(() => {
-		console.log('hey ', fav)
-	}, [])
-
-	// vars for pagination
 	const indexOfLastPost = currentPage * postPerPage
 	const indexOfFirstPost = indexOfLastPost - postPerPage
-
-	const currentPosts = markets?.slice(indexOfFirstPost, indexOfLastPost)
-
-	// metrial ui pagination func
-	const paginate = (event, value) => setCurrentPage(value)
-
-	const isLiked = (market) => {
-		const isFind = fav.find((fav) => {
-			if (fav.code === market.code) {
-				return true
-			}
-		})
-
-		if (isFind) {
-			console.log('this is fav')
-			return true
-		} else return false
-	}
-
+	const currentPosts = favMarkets?.slice(indexOfFirstPost, indexOfLastPost)
+	React.useEffect(() => {
+		dispatch(getFav())
+		console.log('hello', fav)
+	}, [])
+	useEffect(() => {
+		setFavLoading(false)
+		fav.map((fav) =>
+			markets.find((market) => {
+				if (!favMarkets?.includes(market) && market.code === fav.code)
+					setFavMarkets([...favMarkets, market])
+			})
+		)
+	}, [markets])
 	return (
 		<div className='container markets'>
 			{loadingMarket ? (
@@ -90,4 +67,4 @@ function Markets() {
 	)
 }
 
-export default Markets
+export default FavMarkets
