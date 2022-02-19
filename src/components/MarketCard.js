@@ -35,6 +35,11 @@ function MarketCard({
 		// after removing from fav markets fetch again
 		dispatch(allMarkets())
 	}
+
+	const handlePrice = (price) => {
+		let nf = new Intl.NumberFormat()
+		return nf.format(price)
+	}
 	return (
 		<div className={`marketCard ${isLiked && 'liked'}`}>
 			<div className='marketCard__title'>
@@ -42,7 +47,12 @@ function MarketCard({
 				<p>{title}</p>
 			</div>
 
-			<div className='marketCard__price'></div>
+			<div className='marketCard__price'>
+				<p className={price_info.change > 0 ? 'text-success' : 'text-danger'}>
+					{price_info.change}
+				</p>
+				<p>{handlePrice(price)}</p>
+			</div>
 			<div className='marketCard__footer'>
 				<p className='marketCard__footerMarketList'>
 					<Link to={`/markets/${code}`}>لیست معاملات</Link>
