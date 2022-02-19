@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
-import favReducer from './favReducer'
+import cookieReducer from './cookieReducer'
+import favMarketsReducer from './favMarketsReducer'
 import marketReducer from './marketsReducer'
 
 const rootReducer = combineReducers({
-	fav: favReducer,
-	market: marketReducer,
+	cookie: cookieReducer,
+	markets: marketReducer,
+	favMarkets: favMarketsReducer,
 })
 
 export default rootReducer

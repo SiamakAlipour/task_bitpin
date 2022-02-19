@@ -5,8 +5,10 @@ import StarIcon from '@mui/icons-material/Star'
 import { IconButton } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { addFav, removeFav } from '../store/actions/fav'
+import { addCookie, removeCookie } from '../store/actions/cookie'
+import { addFav, removeFav } from '../store/actions/favMarkets'
 import { getCookie } from '../service/cookies'
+import { addMarket, allMarkets } from '../store/actions/market'
 function MarketCard({
 	id,
 	code,
@@ -22,11 +24,16 @@ function MarketCard({
 	const dispatch = useDispatch()
 	const handleLike = () => {
 		setLiked(true)
-		dispatch(addFav({ id, code }))
+		dispatch(addCookie({ id, code }))
+		dispatch(addFav(market))
 	}
 	const handleDisLike = () => {
 		setLiked(false)
+		// remove from cookies and fav markets
+		dispatch(removeCookie(id))
 		dispatch(removeFav(id))
+		// after removing from fav markets fetch again
+		dispatch(allMarkets())
 	}
 	return (
 		<div className={`marketCard ${isLiked && 'liked'}`}>
