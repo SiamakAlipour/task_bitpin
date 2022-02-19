@@ -7,7 +7,6 @@ import Pagination from '@mui/material/Pagination'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCookie } from '../store/actions/cookie'
 import { addFav, getFav } from '../store/actions/favMarkets'
-import { MARKET_ALL } from '../store/actions/types'
 import { allMarkets } from '../store/actions/market'
 
 function FavMarkets() {
@@ -15,13 +14,12 @@ function FavMarkets() {
 	const cookie = useSelector((state) => state.cookie)
 	const markets = useSelector((state) => state.markets)
 	const favMarkets = useSelector((state) => state.favMarkets)
-	const [favLoading, setFavLoading] = useState(false)
-	// const [favMarkets, setFavMarkets] = useState([])
+	const [favLoading, setFavLoading] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [postPerPage] = useState(9)
 	const indexOfLastPost = currentPage * postPerPage
 	const indexOfFirstPost = indexOfLastPost - postPerPage
-	const currentPosts = favMarkets?.slice(indexOfFirstPost, indexOfLastPost)
+	const currentPosts = favMarkets.slice(indexOfFirstPost, indexOfLastPost)
 	const paginate = (event, value) => setCurrentPage(value)
 	React.useEffect(() => {
 		dispatch(allMarkets())
@@ -38,7 +36,11 @@ function FavMarkets() {
 				else if (!isFound && market.code === fav.code) dispatch(addFav(market))
 			})
 		)
-	}, [markets])
+	}, [markets, favMarkets, cookie])
+	useEffect(() => {
+		if (favMarkets.length > 0) setFavLoading(false)
+		else setFavLoading(true)
+	}, [favMarkets])
 	return (
 		<div className='container markets'>
 			{favLoading ? (

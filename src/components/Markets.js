@@ -43,7 +43,6 @@ function Markets({ allMarkets, markets, cookie, favMarkets }) {
 					markets.splice(indexOfObject, 1)
 				}
 			})
-			console.log('arr', markets)
 		}
 
 		// show fav markets first then markets

@@ -7,8 +7,11 @@
 	padding: 10px;
 	position: relative;
 	transition: 0.4s;
+	display: flex;
+	flex-direction: column;
+
 	&.liked {
-		background-color: #ffcdd2;
+		background-color: #b3e5fc;
 	}
 	&:hover {
 		transform: scale(1.005);
@@ -18,8 +21,17 @@
 		align-items: center;
 		justify-content: space-between;
 		font-weight: 600;
+
 		// color: whitesmoke;
 	}
+	&__price {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex: 0.9;
+		direction: ltr;
+	}
+
 	&__footer {
 		width: 100%;
 		position: absolute;
