@@ -1,44 +1,78 @@
 import React, { useEffect, useState } from 'react'
 import './styles/Markets.scss'
-import axios from '../service/axios'
+import { allMarkets } from '../store/actions/market'
 import MarketCard from './MarketCard'
 import { Audio } from 'react-loader-spinner'
 import Pagination from '@mui/material/Pagination'
+import { connect } from 'react-redux'
+import { addFav } from '../store/actions/favMarkets'
 
-import { useDispatch, useSelector } from 'react-redux'
-
-function Markets() {
-	const dispatch = useDispatch()
-	const [markets, setMarkets] = useState([])
+function Markets({ allMarkets, markets, cookie, favMarkets }) {
+	// const [favMarkets, setFavMarkets] = useState([])
+	const [marketsItems, setMarketsItems] = useState([])
 	const [loadingMarket, setLoadingMarket] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [postPerPage] = useState(9)
-	const fetchData = async () => {}
 	useEffect(() => {
-		fetchData()
-	}, [])
-	useEffect(() => {
-		console.log('hey ', fav)
+		allMarkets()
 	}, [])
 
-	// vars for pagination
+	useEffect(() => {
+		if (cookie) {
+			cookie.map((fav) =>
+				markets.find((market) => {
+					// check if already exist in fav markets
+					const isFound = favMarkets.some((fav) => {
+						if (fav.id === market.id) return true
+					})
+
+					//  if not exist add it to fav markets
+					if (!isFound && market.id === fav.id) {
+						addFav(market)
+					}
+				})
+			)
+		}
+		if (favMarkets) {
+			favMarkets.map((fav) => {
+				const indexOfObject = markets.findIndex((market) => {
+					return market.id === fav.id
+				})
+				// if exist then remove
+				if (indexOfObject > -1) {
+					markets.splice(indexOfObject, 1)
+				}
+			})
+			console.log('arr', markets)
+		}
+
+		// show fav markets first then markets
+		if (favMarkets.length > 0) {
+			setMarketsItems([...favMarkets, ...markets])
+		} else {
+			setMarketsItems([...markets])
+		}
+
+		if (marketsItems) setLoadingMarket(false)
+	}, [markets, favMarkets, cookie])
+
+	//  vars for pagination
 	const indexOfLastPost = currentPage * postPerPage
 	const indexOfFirstPost = indexOfLastPost - postPerPage
 
-	const currentPosts = markets?.slice(indexOfFirstPost, indexOfLastPost)
+	const currentPosts = marketsItems?.slice(indexOfFirstPost, indexOfLastPost)
 
 	// metrial ui pagination func
 	const paginate = (event, value) => setCurrentPage(value)
 
 	const isLiked = (market) => {
-		const isFind = fav.find((fav) => {
-			if (fav.code === market.code) {
+		const isFind = cookie.find((cookie) => {
+			if (cookie.code === market.code) {
 				return true
 			}
 		})
 
 		if (isFind) {
-			console.log('this is fav')
 			return true
 		} else return false
 	}
@@ -51,7 +85,7 @@ function Markets() {
 				<>
 					<div className='row justify-content-center'>
 						<div className='wrap'></div>
-						{currentPosts.map((market) => (
+						{currentPosts?.map((market) => (
 							<MarketCard
 								key={market.id}
 								id={market.id}
@@ -68,11 +102,7 @@ function Markets() {
 					</div>
 					<Pagination
 						color='primary'
-						count={
-							location.pathname === '/likedMarkets'
-								? Math.ceil(fav.length / postPerPage)
-								: Math.ceil(markets.length / postPerPage)
-						}
+						count={Math.ceil(markets?.length / postPerPage)}
 						onChange={paginate}
 					/>
 				</>
@@ -80,5 +110,15 @@ function Markets() {
 		</div>
 	)
 }
-
-export default Markets
+const mapStateToProps = (state) => ({
+	markets: state.markets,
+	favMarkets: state.favMarkets,
+	cookie: state.cookie,
+})
+const mapDispatchToProps = (dispatch) => {
+	return {
+		allMarkets: () => dispatch(allMarkets()),
+		addFav: () => dispatch(addFav()),
+	}
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Markets)
