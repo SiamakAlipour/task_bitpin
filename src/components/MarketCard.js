@@ -16,12 +16,12 @@ function MarketCard({
 	price_info,
 	title,
 	title_fa,
-	tradable,
 	market,
 	isLiked,
 }) {
 	const [liked, setLiked] = useState(isLiked)
 	const dispatch = useDispatch()
+
 	const handleLike = () => {
 		setLiked(true)
 		dispatch(addCookie({ id, code }))
@@ -35,7 +35,7 @@ function MarketCard({
 		// after removing from fav markets fetch again
 		dispatch(allMarkets())
 	}
-
+	// handle price will seperate numbers by 3 1,234,232,232
 	const handlePrice = (price) => {
 		let nf = new Intl.NumberFormat()
 		return nf.format(price)

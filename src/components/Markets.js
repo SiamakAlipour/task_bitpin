@@ -7,14 +7,20 @@ import Pagination from '@mui/material/Pagination'
 import { connect } from 'react-redux'
 import { addFav } from '../store/actions/favMarkets'
 
-function Markets({ allMarkets, markets, cookie, favMarkets }) {
+function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 	// const [favMarkets, setFavMarkets] = useState([])
 	const [marketsItems, setMarketsItems] = useState([])
 	const [loadingMarket, setLoadingMarket] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
 	const [postPerPage] = useState(9)
+	// updating prices every 5 seconds
+
 	useEffect(() => {
 		allMarkets()
+		const interval = setInterval(() => {
+			allMarkets()
+		}, 5000)
+		return () => clearInterval(interval)
 	}, [])
 
 	useEffect(() => {
@@ -93,7 +99,6 @@ function Markets({ allMarkets, markets, cookie, favMarkets }) {
 								price_info={market.price_info}
 								title={market.title}
 								title_fa={market.title_fa}
-								tradable={market.tradable}
 								market={market}
 								isLiked={isLiked(market)}
 							/>
@@ -117,7 +122,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
 	return {
 		allMarkets: () => dispatch(allMarkets()),
-		addFav: () => dispatch(addFav()),
+		addFav: (market) => dispatch(addFav(market)),
 	}
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Markets)
