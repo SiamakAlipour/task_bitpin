@@ -5,23 +5,15 @@ import { faker } from '@faker-js/faker'
 import { useSelector, useDispatch } from 'react-redux'
 import TransactionsItem from './TransactionsItem'
 import { allMarkets } from '../store/actions/market'
-import { Chart } from 'react-chartjs-2'
-import { UserData } from '../data'
+import 'chart.js/auto'
 
+import axios from '../service/axios'
+import { Line } from 'react-chartjs-2'
 function Transactions() {
 	let params = useParams()
 	const dispatch = useDispatch()
 	const markets = useSelector((state) => state.markets)
-	const [currencies, setCurrencies] = useState([])
-	const [data, setData] = useState({
-		labels: UserData.map((data) => data.year),
-		datasets: [
-			{
-				label: 'Users Gained',
-				data: UserData.map((data) => data.userGain),
-			},
-		],
-	})
+	const [charts, setCharts] = useState([])
 	const [market, setMarket] = useState([])
 	const types = ['برداشت', 'واریز', 'معامله']
 	const randomList = [...Array(Math.ceil(Math.random() * 10))].map(() => ({
@@ -30,29 +22,32 @@ function Transactions() {
 		amount: faker.datatype.number(),
 		description: faker.random.words(5),
 	}))
-	useEffect(() => {
-		dispatch(allMarkets())
-	}, [])
-	const handleParams = () => {
-		setCurrencies(params.code.split('_'))
-		console.log(faker.date.past())
-	}
 	const handlePrice = (price) => {
 		let nf = new Intl.NumberFormat()
 		return nf.format(price)
 	}
+	// fetch markets
 	useEffect(() => {
-		const randomName = faker.name.findName()
-		console.log(randomName)
-		handleParams()
+		dispatch(allMarkets())
 	}, [])
+	// finding the market to show price and changes
 	useEffect(() => {
 		markets.some((m) => {
 			if (m.code === params.code) setMarket(m)
 		})
-		console.log(market)
-	}, [market, markets])
-
+	}, [markets])
+	useEffect(() => {
+		const fetchData = async () => {
+			await axios.get('/mkt/markets/charts').then((res) =>
+				res.data.results.some((data) => {
+					if (data.code === params.code) {
+						setCharts(data.chart)
+					}
+				})
+			)
+		}
+		fetchData()
+	}, [])
 	return (
 		<div className='transactions container'>
 			<div className='row'>
@@ -90,7 +85,26 @@ function Transactions() {
 						))}
 					</tbody>
 				</table>
-				<Chart chartData={data} />
+				<div className='transactions__chart'>
+					<Line
+						data={{
+							labels: charts.map((data) =>
+								new Date(data.created_at * 1000).toLocaleDateString()
+							),
+							datasets: [
+								{
+									label: params.code,
+									data: charts.map((data) => data.price),
+									backgroundColor: 'rgb(255, 238, 88)',
+									borderColor: 'rgb(255, 238, 88)',
+									color: '#FFF',
+								},
+							],
+						}}
+					/>
+				</div>
+
+				{/* <Chart chartData={data} chart={charts} /> */}
 			</div>
 		</div>
 	)

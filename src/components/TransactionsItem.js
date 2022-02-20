@@ -1,7 +1,6 @@
 import React from 'react'
 import './styles/TransactionsItem.scss'
 function TransactionsItem({ id, date, type, amount, description }) {
-	console.log(type)
 	return (
 		<tr className='transactionsItem'>
 			<th scope='row'>{id + 1}</th>
