@@ -1,0 +1,33 @@
+.transactions {
+	margin-top: 20px;
+	&__currencyInfo {
+		background-color: #212529;
+		margin-bottom: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		padding: 13px;
+		border-radius: 3px;
+		-webkit-box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.35);
+		box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.35);
+	}
+	&__currencyName {
+		background-color: #f44336;
+		padding: 7px;
+		border-radius: 5px;
+		color: white;
+		font-weight: bold;
+
+		> span {
+			direction: ltr;
+		}
+	}
+	// if it is positive style
+	.positive {
+		background-color: #66bb6a;
+	}
+	&__currencyPrice {
+		font-weight: bold;
+		color: whitesmoke;
+	}
+}
