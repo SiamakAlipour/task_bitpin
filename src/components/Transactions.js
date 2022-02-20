@@ -103,8 +103,6 @@ function Transactions() {
 						}}
 					/>
 				</div>
-
-				{/* <Chart chartData={data} chart={charts} /> */}
 			</div>
 		</div>
 	)
