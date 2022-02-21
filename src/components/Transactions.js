@@ -9,7 +9,8 @@ import 'chart.js/auto'
 import { useNavigate } from 'react-router-dom'
 import axios from '../service/axios'
 import { Line } from 'react-chartjs-2'
-
+import { getCookie } from '../store/actions/cookie'
+import _404 from './_404'
 function Transactions() {
 	let params = useParams()
 	const cookie = useSelector((state) => state.cookie)
@@ -18,6 +19,7 @@ function Transactions() {
 	const markets = useSelector((state) => state.markets)
 	const [charts, setCharts] = useState([])
 	const [market, setMarket] = useState([])
+	const [isFind, setIsFind] = useState(false)
 	const types = ['برداشت', 'واریز', 'معامله']
 	const randomList = [...Array(Math.ceil(Math.random() * 10))].map(() => ({
 		date: faker.date.weekday(),
@@ -54,16 +56,12 @@ function Transactions() {
 		})
 	}, [markets])
 
-	// useEffect(() => {
-	// 	dispatch(getCookie())
-	// 	const isFind = markets.some((data) => data.code === params.code)
-	// 	console.log(isFind)
-	// 	if (!isFind) return navigate('/')
-	// }, [])
 	useEffect(() => {
-		console.log(document.cookie)
-	}, [])
-	return (
+		const isFound = markets.some((data) => data.code === params.code)
+		setIsFind(isFound)
+	}, [isFind, params.code, markets])
+
+	return isFind ? (
 		<div className='transactions container'>
 			<div className='row'>
 				<div className='transactions__currencyInfo'>
@@ -120,6 +118,8 @@ function Transactions() {
 				</div>
 			</div>
 		</div>
+	) : (
+		<_404 />
 	)
 }
 
