@@ -6,11 +6,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import TransactionsItem from './TransactionsItem'
 import { allMarkets } from '../store/actions/market'
 import 'chart.js/auto'
-
+import { useNavigate } from 'react-router-dom'
 import axios from '../service/axios'
 import { Line } from 'react-chartjs-2'
+
 function Transactions() {
 	let params = useParams()
+	const cookie = useSelector((state) => state.cookie)
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const markets = useSelector((state) => state.markets)
 	const [charts, setCharts] = useState([])
@@ -30,23 +33,35 @@ function Transactions() {
 	useEffect(() => {
 		dispatch(allMarkets())
 	}, [])
-	// finding the market to show price and changes
-	useEffect(() => {
-		markets.some((m) => {
-			if (m.code === params.code) setMarket(m)
-		})
-	}, [markets])
 	useEffect(() => {
 		const fetchData = async () => {
 			await axios.get('/mkt/markets/charts').then((res) =>
-				res.data.results.some((data) => {
+				res.data.results.forEach((data) => {
 					if (data.code === params.code) {
-						setCharts(data.chart)
+						return setCharts(data.chart)
 					}
 				})
 			)
 		}
+
 		fetchData()
+		console.log(cookie)
+	}, [])
+	// finding the market to show price and changes
+	useEffect(() => {
+		markets.forEach((m) => {
+			if (m.code === params.code) setMarket(m)
+		})
+	}, [markets])
+
+	// useEffect(() => {
+	// 	dispatch(getCookie())
+	// 	const isFind = markets.some((data) => data.code === params.code)
+	// 	console.log(isFind)
+	// 	if (!isFind) return navigate('/')
+	// }, [])
+	useEffect(() => {
+		console.log(document.cookie)
 	}, [])
 	return (
 		<div className='transactions container'>
@@ -89,7 +104,7 @@ function Transactions() {
 					<Line
 						data={{
 							labels: charts.map((data) =>
-								new Date(data.created_at * 1000).toLocaleDateString()
+								new Date(data.created_at * 1000).toLocaleTimeString()
 							),
 							datasets: [
 								{
