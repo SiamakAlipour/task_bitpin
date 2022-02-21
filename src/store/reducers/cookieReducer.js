@@ -6,14 +6,16 @@ const cookieReducer = (state = initialState, action) => {
 	const { type, payload } = action
 	switch (type) {
 		case COOKIE_ADD:
-			setCookie('fav', [...state, payload.value])
+			console.log('cookie added')
+
+			setCookie('fav', [...state, payload.value], 30)
 			return [...state, payload.value]
 
 		case COOKIE_GET:
 			return state
 		case COOKIE_REMOVE:
-			let filteredArray = state.filter((item) => item.id !== payload.id)
-			setCookie('fav', [...filteredArray])
+			let filteredArray = state.filter((item) => item.code !== payload.code)
+			setCookie('fav', filteredArray, 30)
 			return filteredArray
 		default:
 			return state

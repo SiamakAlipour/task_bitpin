@@ -14,9 +14,6 @@ function Header() {
 				<li>
 					<Link to='/favMarkets'>مارکت های مورد علاقه</Link>
 				</li>
-				<li>
-					<Link to='/charts'>نمودار ها</Link>
-				</li>
 			</ul>
 		</header>
 	)

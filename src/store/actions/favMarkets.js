@@ -9,9 +9,9 @@ export const addFav = (data) => ({
 export const getFav = () => ({
 	type: FAV_GET,
 })
-export const removeFav = (id) => ({
+export const removeFav = (code) => ({
 	type: FAV_REMOVE,
 	payload: {
-		id,
+		code,
 	},
 })

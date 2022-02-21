@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './styles/MarketCard.scss'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import StarIcon from '@mui/icons-material/Star'
 import { IconButton } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addCookie, removeCookie } from '../store/actions/cookie'
 import { addFav, removeFav } from '../store/actions/favMarkets'
-import { getCookie } from '../service/cookies'
-import { addMarket, allMarkets } from '../store/actions/market'
+
+import { allMarkets } from '../store/actions/market'
 function MarketCard({
 	id,
 	code,
@@ -30,8 +30,8 @@ function MarketCard({
 	const handleDisLike = () => {
 		setLiked(false)
 		// remove from cookies and fav markets
-		dispatch(removeCookie(id))
-		dispatch(removeFav(id))
+		dispatch(removeCookie(code))
+		dispatch(removeFav(code))
 		// after removing from fav markets fetch again
 		dispatch(allMarkets())
 	}

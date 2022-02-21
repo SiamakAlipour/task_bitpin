@@ -11,7 +11,7 @@ const favMarketsReducer = (state = initialState, action) => {
 		case FAV_GET:
 			return state
 		case FAV_REMOVE:
-			return state.filter((state) => state.id !== payload.id)
+			return state.filter((state) => state.code !== payload.code)
 		default:
 			return state
 	}

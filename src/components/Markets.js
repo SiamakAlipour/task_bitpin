@@ -5,10 +5,10 @@ import MarketCard from './MarketCard'
 import { Audio } from 'react-loader-spinner'
 import Pagination from '@mui/material/Pagination'
 import { connect } from 'react-redux'
-import { addFav } from '../store/actions/favMarkets'
+import { addFav, getFav } from '../store/actions/favMarkets'
+import { getCookie } from '../store/actions/cookie'
 
 function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
-	// const [favMarkets, setFavMarkets] = useState([])
 	const [marketsItems, setMarketsItems] = useState([])
 	const [loadingMarket, setLoadingMarket] = useState(true)
 	const [currentPage, setCurrentPage] = useState(1)
@@ -25,24 +25,24 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 
 	useEffect(() => {
 		if (cookie) {
-			cookie.map((fav) =>
-				markets.find((market) => {
+			cookie.forEach((fav) =>
+				markets.forEach((market) => {
 					// check if already exist in fav markets
 					const isFound = favMarkets.some((fav) => {
-						if (fav.id === market.id) return true
+						if (fav.code === market.code) return true
 					})
 
 					//  if not exist add it to fav markets
-					if (!isFound && market.id === fav.id) {
-						addFav(market)
+					if (!isFound && market.code === fav.code) {
+						return addFav(market)
 					}
 				})
 			)
 		}
 		if (favMarkets) {
-			favMarkets.map((fav) => {
+			favMarkets.forEach((fav) => {
 				const indexOfObject = markets.findIndex((market) => {
-					return market.id === fav.id
+					return market.code === fav.code
 				})
 				// if exist then remove
 				if (indexOfObject > -1) {
@@ -59,6 +59,7 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 		}
 
 		if (marketsItems) setLoadingMarket(false)
+		console.log(cookie)
 	}, [markets, favMarkets, cookie])
 
 	//  vars for pagination
@@ -122,6 +123,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
 	return {
 		allMarkets: () => dispatch(allMarkets()),
+		getFav: () => dispatch(getFav()),
+		getCookie: () => dispatch(getCookie()),
 		addFav: (market) => dispatch(addFav(market)),
 	}
 }

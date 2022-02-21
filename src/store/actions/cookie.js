@@ -6,10 +6,10 @@ export const addCookie = (value) => ({
 		value,
 	},
 })
-export const removeCookie = (id) => ({
+export const removeCookie = (code) => ({
 	type: COOKIE_REMOVE,
 	payload: {
-		id,
+		code,
 	},
 })
 export const getCookie = () => ({
