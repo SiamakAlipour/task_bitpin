@@ -5,8 +5,7 @@ import MarketCard from './MarketCard'
 import { Audio } from 'react-loader-spinner'
 import Pagination from '@mui/material/Pagination'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCookie } from '../store/actions/cookie'
-import { addFav, getFav } from '../store/actions/favMarkets'
+import { addFav } from '../store/actions/favMarkets'
 import { allMarkets } from '../store/actions/market'
 
 function FavMarkets() {
@@ -23,9 +22,8 @@ function FavMarkets() {
 	const paginate = (event, value) => setCurrentPage(value)
 	React.useEffect(() => {
 		dispatch(allMarkets())
-		dispatch(getCookie())
-		dispatch(getFav())
 	}, [])
+	// adding to state what is in cookies
 	useEffect(() => {
 		cookie.map((fav) =>
 			markets.find((market) => {
@@ -36,7 +34,8 @@ function FavMarkets() {
 				else if (!isFound && market.code === fav.code) dispatch(addFav(market))
 			})
 		)
-	}, [markets, favMarkets, cookie])
+	}, [markets, favMarkets, cookie, dispatch])
+	// setting loading false if we found fav markets
 	useEffect(() => {
 		if (favMarkets.length > 0) setFavLoading(false)
 		else setFavLoading(true)
