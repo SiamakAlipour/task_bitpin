@@ -25,8 +25,8 @@ function FavMarkets() {
 	}, [])
 	// adding to state what is in cookies
 	useEffect(() => {
-		cookie.map((fav) =>
-			markets.find((market) => {
+		cookie.forEach((fav) =>
+			markets.forEach((market) => {
 				const isFound = favMarkets.some((fav) => {
 					if (fav.id === market.id) return true
 				})

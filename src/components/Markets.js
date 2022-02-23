@@ -28,9 +28,7 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 			cookie.forEach((fav) =>
 				markets.forEach((market) => {
 					// check if already exist in fav markets
-					const isFound = favMarkets.some((fav) => {
-						if (fav.code === market.code) return true
-					})
+					const isFound = favMarkets.some((fav) => fav.code === market.code)
 
 					//  if not exist add it to fav markets
 					if (!isFound && market.code === fav.code) {
@@ -72,11 +70,7 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 	const paginate = (event, value) => setCurrentPage(value)
 
 	const isLiked = (market) => {
-		const isFind = cookie.find((cookie) => {
-			if (cookie.code === market.code) {
-				return true
-			}
-		})
+		const isFind = cookie.some((cookie) => cookie.code === market.code)
 
 		if (isFind) {
 			return true
