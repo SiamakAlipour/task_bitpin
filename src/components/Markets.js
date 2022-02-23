@@ -58,7 +58,7 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 			setMarketsItems([...markets])
 		}
 
-		if (marketsItems) setLoadingMarket(false)
+		if (markets.length > 0) setLoadingMarket(false)
 		console.log(cookie)
 	}, [markets, favMarkets, cookie])
 
