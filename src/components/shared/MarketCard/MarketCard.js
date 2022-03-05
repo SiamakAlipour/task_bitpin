@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import './styles/MarketCard.scss'
-import StarBorderIcon from '@mui/icons-material/StarBorder'
-import StarIcon from '@mui/icons-material/Star'
-import { IconButton } from '@mui/material'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { addCookie, removeCookie } from '../store/actions/cookie'
-import { addFav, removeFav } from '../store/actions/favMarkets'
+import React, { useState } from 'react';
+import './styles/MarketCard.scss';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import { IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addCookie, removeCookie } from '../../../store/actions/cookie';
+import { addFav, removeFav } from '../../../store/actions/favMarkets';
 
-import { allMarkets } from '../store/actions/market'
+import { allMarkets } from '../../../store/actions/market';
 function MarketCard({
 	id,
 	code,
@@ -19,27 +19,27 @@ function MarketCard({
 	market,
 	isLiked,
 }) {
-	const [liked, setLiked] = useState(isLiked)
-	const dispatch = useDispatch()
+	const [liked, setLiked] = useState(isLiked);
+	const dispatch = useDispatch();
 
 	const handleLike = () => {
-		setLiked(true)
-		dispatch(addCookie({ id, code }))
-		dispatch(addFav(market))
-	}
+		setLiked(true);
+		dispatch(addCookie({ id, code }));
+		dispatch(addFav(market));
+	};
 	const handleDisLike = () => {
-		setLiked(false)
+		setLiked(false);
 		// remove from cookies and fav markets
-		dispatch(removeCookie(code))
-		dispatch(removeFav(code))
+		dispatch(removeCookie(code));
+		dispatch(removeFav(code));
 		// after removing from fav markets fetch again
-		dispatch(allMarkets())
-	}
+		dispatch(allMarkets());
+	};
 	// handle price will seperate numbers by 3 1,234,232,232
 	const handlePrice = (price) => {
-		let nf = new Intl.NumberFormat()
-		return nf.format(price)
-	}
+		let nf = new Intl.NumberFormat();
+		return nf.format(price);
+	};
 	return (
 		<div className={`marketCard ${isLiked && 'liked'}`}>
 			<div className='marketCard__title'>
@@ -68,7 +68,7 @@ function MarketCard({
 				)}
 			</div>
 		</div>
-	)
+	);
 }
 
-export default MarketCard
+export default MarketCard;

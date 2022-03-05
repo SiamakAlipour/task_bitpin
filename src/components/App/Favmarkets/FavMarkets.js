@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import './styles/Markets.scss'
-
 import MarketCard from './MarketCard'
 import { Audio } from 'react-loader-spinner'
 import Pagination from '@mui/material/Pagination'

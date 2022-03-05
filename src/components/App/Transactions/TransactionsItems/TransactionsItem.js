@@ -1,5 +1,5 @@
-import React from 'react'
-import './styles/TransactionsItem.scss'
+import React from 'react';
+import './TransactionsItem.scss';
 function TransactionsItem({ id, date, type, amount, description }) {
 	return (
 		<tr className='transactionsItem'>
@@ -9,7 +9,7 @@ function TransactionsItem({ id, date, type, amount, description }) {
 			<td>{amount}</td>
 			<td>{description}</td>
 		</tr>
-	)
+	);
 }
 
-export default TransactionsItem
+export default TransactionsItem;
