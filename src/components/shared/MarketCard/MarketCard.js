@@ -4,12 +4,18 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { addCookie, removeCookie } from '../../../store/actions/cookie';
 import { addFav, removeFav } from '../../../store/actions/favMarkets';
 
 import { allMarkets } from '../../../store/actions/market';
+import { handlePrice } from '../../../Helpers';
 function MarketCard({
+	allMarkets,
+	addCookie,
+	addFav,
+	removeCookie,
+	removeFav,
 	id,
 	code,
 	price,
@@ -20,26 +26,22 @@ function MarketCard({
 	isLiked,
 }) {
 	const [liked, setLiked] = useState(isLiked);
-	const dispatch = useDispatch();
 
 	const handleLike = () => {
 		setLiked(true);
-		dispatch(addCookie({ id, code }));
-		dispatch(addFav(market));
+		addCookie({ id, code });
+		addFav(market);
 	};
 	const handleDisLike = () => {
 		setLiked(false);
 		// remove from cookies and fav markets
-		dispatch(removeCookie(code));
-		dispatch(removeFav(code));
+		removeCookie(code);
+		removeFav(code);
 		// after removing from fav markets fetch again
-		dispatch(allMarkets());
+		allMarkets();
 	};
 	// handle price will seperate numbers by 3 1,234,232,232
-	const handlePrice = (price) => {
-		let nf = new Intl.NumberFormat();
-		return nf.format(price);
-	};
+
 	return (
 		<div className={`marketCard ${isLiked && 'liked'}`}>
 			<div className='marketCard__title'>
@@ -71,4 +73,11 @@ function MarketCard({
 	);
 }
 
-export default MarketCard;
+const mapDispatchToProps = (dispatch) => ({
+	allMarkets: () => dispatch(allMarkets()),
+	addCookie: (id, code) => dispatch(addCookie({ id, code })),
+	addFav: (market) => dispatch(addFav(market)),
+	removeCookie: (code) => dispatch(removeCookie(code)),
+	removeFav: (code) => dispatch(removeFav(code)),
+});
+export default connect(null, mapDispatchToProps)(MarketCard);

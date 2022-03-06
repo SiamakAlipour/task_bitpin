@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import './styles/Transactions.scss';
 import { useParams } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
-import { useSelector, useDispatch } from 'react-redux';
-import TransactionsItem from './TransactionsItem';
-import { allMarkets } from '../store/actions/market';
-import 'chart.js/auto';
-import { useNavigate } from 'react-router-dom';
-import axios from '../service/axios';
+import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
-import { getCookie } from '../store/actions/cookie';
+
+import { allMarkets } from '../store/actions/market';
+import axios from '../service/axios';
+import TransactionsItem from './TransactionsItem';
 import _404 from './_404';
-function Transactions() {
+import './Transactions.scss';
+import 'chart.js/auto';
+import { handlePrice } from '../../../Helpers';
+
+function Transactions({ allMarkets, cookie, markets }) {
 	let params = useParams();
-	const cookie = useSelector((state) => state.cookie);
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const markets = useSelector((state) => state.markets);
 	const [charts, setCharts] = useState([]);
 	const [market, setMarket] = useState([]);
 	const [isFind, setIsFind] = useState(false);
@@ -27,13 +24,10 @@ function Transactions() {
 		amount: faker.datatype.number(),
 		description: faker.random.words(5),
 	}));
-	const handlePrice = (price) => {
-		let nf = new Intl.NumberFormat();
-		return nf.format(price);
-	};
+
 	// fetch markets
 	useEffect(() => {
-		dispatch(allMarkets());
+		allMarkets();
 	}, []);
 	useEffect(() => {
 		(async () => {
@@ -45,8 +39,6 @@ function Transactions() {
 				})
 			);
 		})();
-
-		console.log(cookie);
 	}, []);
 	// finding the market to show price and changes
 	useEffect(() => {
@@ -122,4 +114,12 @@ function Transactions() {
 	);
 }
 
-export default Transactions;
+const mapStateToProps = (state) => ({
+	cookie: state.cookie,
+	markets: state.markets,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+	allMarkets: () => dispatch(allMarkets()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Transactions);

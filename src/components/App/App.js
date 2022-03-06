@@ -12,7 +12,6 @@ function App() {
 			<Routes>
 				<Route path='/' element={<Markets />} />
 				<Route path='/markets/:code' element={<Transactions />} />
-
 				<Route path='/favMarkets' element={<FavMarkets />} />
 				<Route path='*' element={<_404 />} />
 			</Routes>

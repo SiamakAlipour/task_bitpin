@@ -1,18 +1,18 @@
-import { MARKET_ADD, MARKET_ALL } from '../actions/types'
+import { MARKET_ADD, MARKET_ALL } from '../actions/types';
 
-const initialState = []
+const initialState = null;
 
 const marketReducer = (state = initialState, action) => {
-	const { type, payload } = action
+	const { type, payload } = action;
 
 	switch (type) {
 		case MARKET_ALL:
-			return payload.data
+			return payload.data;
 		case MARKET_ADD:
-			return [payload.data, ...state]
+			return [payload.data, ...state];
 		default:
-			return state
+			return state;
 	}
-}
+};
 
-export default marketReducer
+export default marketReducer;

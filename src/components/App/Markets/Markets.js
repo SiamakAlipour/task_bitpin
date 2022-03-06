@@ -5,16 +5,16 @@ import MarketCard from './MarketCard';
 import { Audio } from 'react-loader-spinner';
 import Pagination from '@mui/material/Pagination';
 import { connect } from 'react-redux';
-import { addFav, getFav } from '../store/actions/favMarkets';
-import { getCookie } from '../store/actions/cookie';
+import { addFav } from '../store/actions/favMarkets';
+
+const postPerPage = 9;
 
 function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
-	const [marketsItems, setMarketsItems] = useState([]);
-	const [loadingMarket, setLoadingMarket] = useState(true);
+	const [marketsItems, setMarketsItems] = useState(null);
+	// const [loadingMarket, setLoadingMarket] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [postPerPage] = useState(9);
-	// updating prices every 5 seconds
 
+	// updating prices every 5 seconds
 	useEffect(() => {
 		allMarkets();
 		const interval = setInterval(() => {
@@ -55,23 +55,17 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 		} else {
 			setMarketsItems([...markets]);
 		}
-
-		if (markets.length > 0) setLoadingMarket(false);
-		console.log(cookie);
 	}, [markets, favMarkets, cookie]);
 
 	//  vars for pagination
 	const indexOfLastPost = currentPage * postPerPage;
 	const indexOfFirstPost = indexOfLastPost - postPerPage;
-
 	const currentPosts = marketsItems?.slice(indexOfFirstPost, indexOfLastPost);
-
 	// metrial ui pagination func
 	const paginate = (event, value) => setCurrentPage(value);
 
 	const isLiked = (market) => {
 		const isFind = cookie.some((cookie) => cookie.code === market.code);
-
 		if (isFind) {
 			return true;
 		} else return false;
@@ -79,7 +73,7 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 
 	return (
 		<div className='container markets'>
-			{loadingMarket ? (
+			{marketsItems === null ? (
 				<Audio height='100' width='100' color='grey' ariaLabel='loading' />
 			) : (
 				<>
@@ -114,12 +108,8 @@ const mapStateToProps = (state) => ({
 	favMarkets: state.favMarkets,
 	cookie: state.cookie,
 });
-const mapDispatchToProps = (dispatch) => {
-	return {
-		allMarkets: () => dispatch(allMarkets()),
-		getFav: () => dispatch(getFav()),
-		getCookie: () => dispatch(getCookie()),
-		addFav: (market) => dispatch(addFav(market)),
-	};
-};
+const mapDispatchToProps = (dispatch) => ({
+	allMarkets: () => dispatch(allMarkets()),
+	addFav: (market) => dispatch(addFav(market)),
+});
 export default connect(mapStateToProps, mapDispatchToProps)(Markets);
