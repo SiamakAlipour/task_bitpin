@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './styles/Markets.scss';
-import { allMarkets } from '../store/actions/market';
-import MarketCard from './MarketCard';
+import { connect } from 'react-redux';
 import { Audio } from 'react-loader-spinner';
 import Pagination from '@mui/material/Pagination';
-import { connect } from 'react-redux';
-import { addFav } from '../store/actions/favMarkets';
+
+import MarketCard from '@shared/MarketCard';
+import { addFav } from '@store/actions/favMarkets';
+import { allMarkets } from '@store/actions/market';
+
+import './Markets.scss';
 
 const postPerPage = 9;
 

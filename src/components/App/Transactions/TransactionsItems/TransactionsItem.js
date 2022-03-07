@@ -1,5 +1,7 @@
 import React from 'react';
+
 import './TransactionsItem.scss';
+
 function TransactionsItem({ id, date, type, amount, description }) {
 	return (
 		<tr className='transactionsItem'>

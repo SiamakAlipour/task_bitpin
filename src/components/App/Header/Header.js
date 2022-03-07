@@ -1,6 +1,7 @@
-import React from 'react'
-import './styles/Header.scss'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+import './Header.scss';
 
 function Header() {
 	return (
@@ -16,7 +17,7 @@ function Header() {
 				</li>
 			</ul>
 		</header>
-	)
+	);
 }
 
-export default Header
+export default Header;

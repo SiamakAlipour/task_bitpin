@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import './styles/Markets.scss';
-import MarketCard from './MarketCard';
-import { Audio } from 'react-loader-spinner';
-import Pagination from '@mui/material/Pagination';
 import { connect } from 'react-redux';
-import { addFav } from '../store/actions/favMarkets';
-import { allMarkets } from '../store/actions/market';
+import { Audio } from 'react-loader-spinner';
+
+import Pagination from '@mui/material/Pagination';
+
+import MarketCard from '@shared/MarketCard';
+import { addFav } from '@store/actions/favMarkets';
+import { allMarkets } from '@store/actions/market';
+
+import '../Markets/Markets.scss';
 
 const postPerPage = 9;
 
@@ -16,7 +19,7 @@ function FavMarkets({ allMarkets, cookie, markets, favMarkets }) {
 	const indexOfFirstPost = indexOfLastPost - postPerPage;
 	const currentPosts = favMarkets.slice(indexOfFirstPost, indexOfLastPost);
 	const paginate = (event, value) => setCurrentPage(value);
-	React.useEffect(() => {
+	useEffect(() => {
 		allMarkets();
 	}, []);
 	// adding to state what is in cookies
@@ -27,10 +30,10 @@ function FavMarkets({ allMarkets, cookie, markets, favMarkets }) {
 					if (fav.id === market.id) return true;
 				});
 				if (isFound) return;
-				else if (!isFound && market.code === fav.code) dispatch(addFav(market));
+				else if (!isFound && market.code === fav.code) addFav(market);
 			})
 		);
-	}, [markets, favMarkets, cookie, dispatch]);
+	}, [markets, favMarkets, cookie]);
 	// setting loading false if we found fav markets
 	// useEffect(() => {
 	// 	if (favMarkets.length > 0) setFavLoading(false);
@@ -78,6 +81,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	allMarkets: () => dispatch(allMarkets()),
+	addFav: (market) => dispatch(addFav(market)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavMarkets);

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import './styles/MarketCard.scss';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { addCookie, removeCookie } from '../../../store/actions/cookie';
-import { addFav, removeFav } from '../../../store/actions/favMarkets';
 
-import { allMarkets } from '../../../store/actions/market';
-import { handlePrice } from '../../../Helpers';
+import { handlePrice } from '@helpers';
+import { addCookie, removeCookie } from '@store/actions/cookie';
+import { addFav, removeFav } from '@store/actions/favMarkets';
+import { allMarkets } from '@store/actions/market';
+
+import './MarketCard.scss';
+
 function MarketCard({
 	allMarkets,
 	addCookie,

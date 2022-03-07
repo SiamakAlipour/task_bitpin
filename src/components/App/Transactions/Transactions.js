@@ -4,13 +4,14 @@ import { faker } from '@faker-js/faker';
 import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 
-import { allMarkets } from '../store/actions/market';
-import axios from '../service/axios';
-import TransactionsItem from './TransactionsItem';
-import _404 from './_404';
+import _404 from '@components/App/_404';
+import { handlePrice } from '@helpers';
+import axios from '@service/axios';
+import { allMarkets } from '@store/actions/market';
+
+import TransactionsItem from './TransactionsItems';
 import './Transactions.scss';
 import 'chart.js/auto';
-import { handlePrice } from '../../../Helpers';
 
 function Transactions({ allMarkets, cookie, markets }) {
 	let params = useParams();

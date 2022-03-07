@@ -1,10 +1,14 @@
-import './App.scss';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from '../components/App/Header/Header';
-import _404 from '../_404';
-import Markets from './Markets/Markets';
-import Transactions from './Transactions/Transactions';
-import FavMarkets from './Favmarkets/FavMarkets';
+
+import _404 from './_404';
+import FavMarkets from './FavMarkets';
+import Header from './Header';
+import Markets from './Markets';
+import Transactions from './Transactions';
+
+import './App.scss';
+
 function App() {
 	return (
 		<div className='app'>
