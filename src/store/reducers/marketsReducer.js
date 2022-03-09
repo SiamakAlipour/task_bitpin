@@ -1,4 +1,4 @@
-import { MARKET_ADD, MARKET_ALL } from 'constants/types';
+import { MARKET_ADD, MARKET_ALL } from 'utils/constants';
 
 const initialState = null;
 

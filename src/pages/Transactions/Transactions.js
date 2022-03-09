@@ -4,9 +4,9 @@ import { faker } from '@faker-js/faker';
 import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 
-import _404 from 'components/App/_404';
-import { handlePrice } from 'helpers';
-import axios from 'service/axios';
+import _404 from 'pages/_404';
+import { handlePrice } from 'utils/helpers';
+import { bitpin } from 'utils/services/api';
 import { allMarkets } from 'store/actions/market';
 
 import TransactionsItem from './TransactionsItems';
@@ -32,7 +32,7 @@ function Transactions({ allMarkets, cookie, markets }) {
 	}, []);
 	useEffect(() => {
 		(async () => {
-			await axios.get('/mkt/markets/charts').then((res) =>
+			await bitpin.get('/mkt/markets/charts').then((res) =>
 				res.data.results.forEach((data) => {
 					if (data.code === params.code) {
 						return setCharts(data.chart);

@@ -1,8 +1,6 @@
 // Creating custom axios for api base url
-import axios from 'axios'
+import axios from 'axios';
 
-const url = axios.create({
+export const bitpin = axios.create({
 	baseURL: 'https://api.bitpin.ir/v1',
-})
-
-export default url
+});

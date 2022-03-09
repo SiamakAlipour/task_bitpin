@@ -1,6 +1,6 @@
-import { FAV_ADD, FAV_GET, FAV_REMOVE } from 'constants/types';
+import { FAV_ADD, FAV_GET, FAV_REMOVE } from 'utils/constants';
 
-const initialState = [];
+const initialState = null;
 
 const favMarketsReducer = (state = initialState, action) => {
 	const { type, payload } = action;

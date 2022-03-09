@@ -5,9 +5,9 @@ module.exports = {
 		alias: {
 			components: path.resolve(__dirname, 'src/components'),
 			store: path.resolve(__dirname, 'src/store/'),
-			helpers: path.resolve(__dirname, 'src/helpers/'),
-			service: path.resolve(__dirname, 'src/service/'),
+			utils: path.resolve(__dirname, 'src/utils'),
 			shared: path.resolve(__dirname, 'src/components/shared'),
+			pages: path.resolve(__dirname, 'src/pages'),
 			hooks: path.resolve(__dirname, 'src/hooks'),
 		},
 	},

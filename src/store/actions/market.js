@@ -1,8 +1,8 @@
-import axios from 'service/axios';
-import { MARKET_ADD, MARKET_ALL } from 'constants/types';
+import { bitpin } from 'utils/services/api';
+import { MARKET_ADD, MARKET_ALL } from 'utils/constants';
 
 export const allMarkets = () => async (dispatch) => {
-	await axios.get('/mkt/markets').then((res) => {
+	await bitpin.get('/mkt/markets').then((res) => {
 		dispatch({
 			type: MARKET_ALL,
 			payload: { data: res.data.results },

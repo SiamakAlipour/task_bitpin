@@ -7,19 +7,19 @@ import MarketCard from 'components/shared/MarketCard';
 import { addFav } from 'store/actions/favMarkets';
 import { allMarkets } from 'store/actions/market';
 import useFetch from 'hooks/useFetch';
+import usePagination from 'hooks/usePagination';
 
 import './Markets.scss';
 
 const postPerPage = 9;
 
 function Markets({ allMarkets, addFav, cookie, favMarkets }) {
-	// const [markets, setMarkets] = useState(null);
-	const [marketsItems, setMarketsItems] = useState(null);
-	// const [loadingMarket, setLoadingMarket] = useState(true);
-	const [currentPage, setCurrentPage] = useState(1);
-
 	const { data, error, loading } = useFetch('/mkt/markets');
-
+	const { currentPosts, paginate } = usePagination(data, postPerPage);
+	const handleAdd = (code, market) => {
+		setFavMarkets([market, ...favMarkets]);
+		setCookie('fav', code, 30);
+	};
 	// updating prices every 5 seconds
 	// useEffect(() => {
 	// 	allMarkets();
@@ -64,11 +64,6 @@ function Markets({ allMarkets, addFav, cookie, favMarkets }) {
 	// }, [data, favMarkets, cookie]);
 
 	//  vars for pagination
-	const indexOfLastPost = currentPage * postPerPage;
-	const indexOfFirstPost = indexOfLastPost - postPerPage;
-	const currentPosts = marketsItems?.slice(indexOfFirstPost, indexOfLastPost);
-	// metrial ui pagination func
-	const paginate = (event, value) => setCurrentPage(value);
 
 	const isLiked = (market) => {
 		const isFind = cookie.some((cookie) => cookie.code === market.code);
@@ -85,7 +80,7 @@ function Markets({ allMarkets, addFav, cookie, favMarkets }) {
 				<>
 					<div className='row justify-content-center'>
 						<div className='wrap'></div>
-						{data?.map((market) => (
+						{currentPosts.map((market) => (
 							<MarketCard
 								key={market.id}
 								id={market.id}

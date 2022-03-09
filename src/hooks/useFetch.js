@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import axios from 'service/axios';
+import { bitpin } from 'utils/services/api';
 
 function useFetch(url) {
 	const [data, setData] = useState(null);
@@ -9,7 +9,7 @@ function useFetch(url) {
 
 	useEffect(() => {
 		(async () => {
-			await axios
+			await bitpin
 				.get(url)
 				.then((res) => setData(res.data.results))
 				.catch((err) => setError(err))

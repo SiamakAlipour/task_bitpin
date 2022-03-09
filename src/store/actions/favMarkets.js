@@ -1,4 +1,4 @@
-import { FAV_ADD, FAV_GET, FAV_REMOVE } from 'constants/types';
+import { FAV_ADD, FAV_GET, FAV_REMOVE } from 'utils/constants';
 
 export const addFav = (data) => ({
 	type: FAV_ADD,

@@ -1,4 +1,4 @@
-import { COOKIE_ADD, COOKIE_GET, COOKIE_REMOVE } from 'constants/types';
+import { COOKIE_ADD, COOKIE_GET, COOKIE_REMOVE } from 'utils/constants';
 
 export const addCookie = (value) => ({
 	type: COOKIE_ADD,

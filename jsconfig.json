@@ -5,10 +5,11 @@
 		"paths": {
 			"components/*": ["./src/components/*"],
 			"store/*": ["./src/store/*"],
-			"service/*": ["./src/service/*"],
+			"pages/*": ["./src/pages/*"],
+			"services/*": ["src/services/*"],
 			"hooks/*": ["./src/hooks/*"],
 			"constants/*": ["./src/utils/constants/*"],
-			"helpers/*": ["./src/utils/helpers/*"]
+			"helpers/*": ["./src/utils/helpers"]
 		}
 	},
 	"exclude": ["node_modules", "dist"]
