@@ -5,10 +5,10 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from '@mui/material';
 
-import { handlePrice } from '@helpers';
-import { addCookie, removeCookie } from '@store/actions/cookie';
-import { addFav, removeFav } from '@store/actions/favMarkets';
-import { allMarkets } from '@store/actions/market';
+import { handlePrice } from 'helpers';
+import { addCookie, removeCookie } from 'store/actions/cookie';
+import { addFav, removeFav } from 'store/actions/favMarkets';
+import { allMarkets } from 'store/actions/market';
 
 import './MarketCard.scss';
 

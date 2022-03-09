@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './TransactionsItem.scss';
 
@@ -13,5 +14,13 @@ function TransactionsItem({ id, date, type, amount, description }) {
 		</tr>
 	);
 }
+
+TransactionsItem.propTypes = {
+	id: PropTypes.string,
+	date: PropTypes.string,
+	type: PropTypes.oneOf(['برداشت', 'واریز', 'معامله']),
+	amount: PropTypes.number,
+	description: PropTypes.string,
+};
 
 export default TransactionsItem;

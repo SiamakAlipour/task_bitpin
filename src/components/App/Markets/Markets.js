@@ -3,61 +3,65 @@ import { connect } from 'react-redux';
 import { Audio } from 'react-loader-spinner';
 import Pagination from '@mui/material/Pagination';
 
-import MarketCard from '@shared/MarketCard';
-import { addFav } from '@store/actions/favMarkets';
-import { allMarkets } from '@store/actions/market';
+import MarketCard from 'components/shared/MarketCard';
+import { addFav } from 'store/actions/favMarkets';
+import { allMarkets } from 'store/actions/market';
+import useFetch from 'hooks/useFetch';
 
 import './Markets.scss';
 
 const postPerPage = 9;
 
-function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
+function Markets({ allMarkets, addFav, cookie, favMarkets }) {
+	// const [markets, setMarkets] = useState(null);
 	const [marketsItems, setMarketsItems] = useState(null);
 	// const [loadingMarket, setLoadingMarket] = useState(true);
 	const [currentPage, setCurrentPage] = useState(1);
 
+	const { data, error, loading } = useFetch('/mkt/markets');
+
 	// updating prices every 5 seconds
-	useEffect(() => {
-		allMarkets();
-		const interval = setInterval(() => {
-			allMarkets();
-		}, 5000);
-		return () => clearInterval(interval);
-	}, []);
+	// useEffect(() => {
+	// 	allMarkets();
+	// 	const interval = setInterval(() => {
+	// 		allMarkets();
+	// 	}, 5000);
+	// 	return () => clearInterval(interval);
+	// }, []);
 
-	useEffect(() => {
-		if (cookie) {
-			cookie.forEach((fav) =>
-				markets.forEach((market) => {
-					// check if already exist in fav markets
-					const isFound = favMarkets.some((fav) => fav.code === market.code);
+	// useEffect(() => {
+	// 	if (cookie) {
+	// 		cookie.forEach((fav) =>
+	// 			data?.forEach((market) => {
+	// 				// check if already exist in fav markets
+	// 				const isFound = favMarkets.some((fav) => fav.code === market.code);
 
-					//  if not exist add it to fav markets
-					if (!isFound && market.code === fav.code) {
-						return addFav(market);
-					}
-				})
-			);
-		}
-		if (favMarkets) {
-			favMarkets.forEach((fav) => {
-				const indexOfObject = markets.findIndex((market) => {
-					return market.code === fav.code;
-				});
-				// if exist then remove
-				if (indexOfObject > -1) {
-					markets.splice(indexOfObject, 1);
-				}
-			});
-		}
+	// 				//  if not exist add it to fav markets
+	// 				if (!isFound && market.code === fav.code) {
+	// 					return addFav(market);
+	// 				}
+	// 			})
+	// 		);
+	// 	}
+	// 	if (favMarkets) {
+	// 		favMarkets.forEach((fav) => {
+	// 			const indexOfObject = data.findIndex((market) => {
+	// 				return market.code === fav.code;
+	// 			});
+	// 			// if exist then remove
+	// 			if (indexOfObject > -1) {
+	// 				data.splice(indexOfObject, 1);
+	// 			}
+	// 		});
+	// 	}
 
-		// show fav markets first then markets
-		if (favMarkets.length > 0) {
-			setMarketsItems([...favMarkets, ...markets]);
-		} else {
-			setMarketsItems([...markets]);
-		}
-	}, [markets, favMarkets, cookie]);
+	// 	// show fav markets first then markets
+	// 	if (favMarkets.length > 0) {
+	// 		setMarketsItems([...favMarkets, ...data]);
+	// 	} else {
+	// 		setMarketsItems([...data]);
+	// 	}
+	// }, [data, favMarkets, cookie]);
 
 	//  vars for pagination
 	const indexOfLastPost = currentPage * postPerPage;
@@ -75,13 +79,13 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 
 	return (
 		<div className='container markets'>
-			{marketsItems === null ? (
+			{!loading ? (
 				<Audio height='100' width='100' color='grey' ariaLabel='loading' />
 			) : (
 				<>
 					<div className='row justify-content-center'>
 						<div className='wrap'></div>
-						{currentPosts?.map((market) => (
+						{data?.map((market) => (
 							<MarketCard
 								key={market.id}
 								id={market.id}
@@ -97,7 +101,7 @@ function Markets({ allMarkets, markets, addFav, cookie, favMarkets }) {
 					</div>
 					<Pagination
 						color='primary'
-						count={Math.ceil(markets?.length / postPerPage)}
+						count={Math.ceil(data?.length / postPerPage)}
 						onChange={paginate}
 					/>
 				</>

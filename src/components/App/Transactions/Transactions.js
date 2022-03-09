@@ -4,10 +4,10 @@ import { faker } from '@faker-js/faker';
 import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 
-import _404 from '@components/App/_404';
-import { handlePrice } from '@helpers';
-import axios from '@service/axios';
-import { allMarkets } from '@store/actions/market';
+import _404 from 'components/App/_404';
+import { handlePrice } from 'helpers';
+import axios from 'service/axios';
+import { allMarkets } from 'store/actions/market';
 
 import TransactionsItem from './TransactionsItems';
 import './Transactions.scss';

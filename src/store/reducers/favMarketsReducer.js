@@ -1,20 +1,20 @@
-import { FAV_ADD, FAV_GET, FAV_REMOVE } from '../actions/types'
+import { FAV_ADD, FAV_GET, FAV_REMOVE } from 'constants/types';
 
-const initialState = []
+const initialState = [];
 
 const favMarketsReducer = (state = initialState, action) => {
-	const { type, payload } = action
+	const { type, payload } = action;
 
 	switch (type) {
 		case FAV_ADD:
-			return [...state, payload.data]
+			return [...state, payload.data];
 		case FAV_GET:
-			return state
+			return state;
 		case FAV_REMOVE:
-			return state.filter((state) => state.code !== payload.code)
+			return state.filter((state) => state.code !== payload.code);
 		default:
-			return state
+			return state;
 	}
-}
+};
 
-export default favMarketsReducer
+export default favMarketsReducer;

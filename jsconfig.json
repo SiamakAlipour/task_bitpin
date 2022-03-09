@@ -1,0 +1,15 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"baseUrl": "./src",
+		"paths": {
+			"components/*": ["./src/components/*"],
+			"store/*": ["./src/store/*"],
+			"service/*": ["./src/service/*"],
+			"hooks/*": ["./src/hooks/*"],
+			"constants/*": ["./src/utils/constants/*"],
+			"helpers/*": ["./src/utils/helpers/*"]
+		}
+	},
+	"exclude": ["node_modules", "dist"]
+}

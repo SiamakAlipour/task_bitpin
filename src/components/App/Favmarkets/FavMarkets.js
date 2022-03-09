@@ -4,9 +4,9 @@ import { Audio } from 'react-loader-spinner';
 
 import Pagination from '@mui/material/Pagination';
 
-import MarketCard from '@shared/MarketCard';
-import { addFav } from '@store/actions/favMarkets';
-import { allMarkets } from '@store/actions/market';
+import MarketCard from 'components/shared/MarketCard';
+import { addFav } from 'store/actions/favMarkets';
+import { allMarkets } from 'store/actions/market';
 
 import '../Markets/Markets.scss';
 
