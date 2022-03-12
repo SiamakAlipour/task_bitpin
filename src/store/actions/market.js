@@ -1,17 +1,18 @@
-import { bitpin } from 'utils/services/api';
-import { MARKET_ADD, MARKET_ALL } from 'utils/constants';
+import api from 'utils/services/api';
+import { MARKET_TOGGLEFAV, MARKET_GET } from 'utils/constants';
+import { GET } from 'utils/constants/index';
 
-export const allMarkets = () => async (dispatch) => {
-	await bitpin.get('/mkt/markets').then((res) => {
+export const getMarkets = () => async (dispatch) => {
+	await api('/mkt/markets', GET).then((res) => {
 		dispatch({
-			type: MARKET_ALL,
+			type: MARKET_GET,
 			payload: { data: res.data.results },
 		});
 	});
 };
-export const addMarket = (data) => ({
-	type: MARKET_ADD,
+export const toggleFavorite = (id) => ({
+	type: MARKET_TOGGLEFAV,
 	payload: {
-		data,
+		id,
 	},
 });

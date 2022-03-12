@@ -5,49 +5,58 @@ import { Audio } from 'react-loader-spinner';
 import Pagination from '@mui/material/Pagination';
 
 import MarketCard from 'components/shared/MarketCard';
-import { addFav, getFav } from 'store/actions/favMarkets';
-import { allMarkets } from 'store/actions/market';
 
-import '../Markets/Markets.scss';
 import usePagination from 'hooks/usePagination';
-import useFetch from 'hooks/useFetch';
+import { getMarkets } from 'store/actions/market';
 import { setCookie } from 'utils/services/cookies';
 import { getCookie } from 'utils/services/cookies';
 
+import '../Markets/Markets.scss';
+
 const postPerPage = 9;
 
-function FavMarkets({ cookie }) {
+function FavMarkets({ getMarkets, markets }) {
 	const [favMarkets, setFavMarkets] = useState([]);
-	const { data, error, loading } = useFetch('/mkt/markets');
-	const { currentPosts, paginate } = usePagination(favMarkets, 9);
 
-	const handleAdd = (code, market) => {
+	const { currentPosts, paginate } = usePagination(favMarkets, 9);
+	useEffect(() => {
+		getMarkets();
+	}, []);
+	const handleAdd = (id, market) => {
 		setFavMarkets([market, ...favMarkets]);
-		setCookie('fav', code, 30);
+		setCookie('fav', id, 30);
 	};
-	const handleRemove = (code) => {
+	const handleRemove = (id) => {
 		let cookies = getCookie('fav');
-		let arr = favMarkets.filter((markets) => markets.code !== code);
-		setFavMarkets([...arr]);
+		let arr = favMarkets.filter((markets) => markets.id !== id);
+		setFavMarkets(arr);
 		console.log(arr);
 		setCookie(
 			'fav',
-			cookies.filter((cookie) => cookie.code !== code)
+			cookies.filter((cookie) => cookie.id !== id)
 		);
 	};
-	// adding to state what is in cookies
 	useEffect(() => {
-		cookie.forEach((fav) =>
-			data?.forEach((market) => {
-				const isFound = favMarkets.some((fav) => {
-					if (fav.id === market.id) return true;
-				});
-				if (isFound) return;
-				else if (!isFound && market.code === fav.code)
-					setFavMarkets([...favMarkets, market]);
-			})
-		);
-	}, [data, favMarkets, cookie]);
+		markets.forEach((market) => {
+			if (market.liked === true) {
+				setFavMarkets([...favMarkets, market]);
+			}
+		});
+	}, [markets]);
+	// adding to state what is in cookies
+	// useEffect(() => {
+	// 	console.log(cookie);
+	// 	cookie.forEach((fav) =>
+	// 		markets?.forEach((market) => {
+	// 			const isFound = favMarkets.some((fav) => {
+	// 				if (fav.id === market.id) return true;
+	// 			});
+	// 			if (isFound) return;
+	// 			else if (!isFound && market.id === fav.id)
+	// 				setFavMarkets([...favMarkets, market]);
+	// 		})
+	// 	);
+	// }, [markets, cookie, favMarkets]);
 
 	return (
 		<div className='container markets'>
@@ -57,7 +66,7 @@ function FavMarkets({ cookie }) {
 				<>
 					<div className='row justify-content-center'>
 						<div className='wrap'></div>
-						{currentPosts?.map((market) => (
+						{currentPosts.map((market) => (
 							<MarketCard
 								key={market.id}
 								id={market.id}
@@ -85,12 +94,11 @@ function FavMarkets({ cookie }) {
 }
 
 const mapStateToProps = (state) => ({
-	cookie: state.cookie,
+	markets: state.markets,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-// 	addFav: (market) => dispatch(addFav(market)),
-// 	getFav: () => dispatch(getFav()),
-// });
+const mapDispatchToProps = (dispatch) => ({
+	getMarkets: () => dispatch(getMarkets()),
+});
 
-export default connect(mapStateToProps, null)(FavMarkets);
+export default connect(mapStateToProps, mapDispatchToProps)(FavMarkets);

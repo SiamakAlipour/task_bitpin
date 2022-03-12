@@ -1,15 +1,20 @@
-import { MARKET_ADD, MARKET_ALL } from 'utils/constants';
+import { MARKET_TOGGLEFAV, MARKET_GET } from 'utils/constants';
 
-const initialState = null;
+const initialState = [];
 
 const marketReducer = (state = initialState, action) => {
 	const { type, payload } = action;
 
 	switch (type) {
-		case MARKET_ALL:
-			return payload.data;
-		case MARKET_ADD:
-			return [payload.data, ...state];
+		case MARKET_GET:
+			return [...state, ...payload.data].map((item) => ({
+				...item,
+				liked: false,
+			}));
+		case MARKET_TOGGLEFAV:
+			return state.map((state) =>
+				state.id === payload.id ? { ...state, liked: !state.liked } : state
+			);
 		default:
 			return state;
 	}

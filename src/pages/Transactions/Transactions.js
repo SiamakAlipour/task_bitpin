@@ -6,14 +6,15 @@ import { Line } from 'react-chartjs-2';
 
 import _404 from 'pages/_404';
 import { handlePrice } from 'utils/helpers';
-import { bitpin } from 'utils/services/api';
-import { allMarkets } from 'store/actions/market';
+import api from 'utils/services/api';
+import { getMarkets } from 'store/actions/market';
 
 import TransactionsItem from './TransactionsItems';
 import './Transactions.scss';
 import 'chart.js/auto';
+import { GET } from 'utils/constants/index';
 
-function Transactions({ allMarkets, cookie, markets }) {
+function Transactions({ getMarkets, cookie, markets }) {
 	let params = useParams();
 	const [charts, setCharts] = useState([]);
 	const [market, setMarket] = useState([]);
@@ -28,11 +29,11 @@ function Transactions({ allMarkets, cookie, markets }) {
 
 	// fetch markets
 	useEffect(() => {
-		allMarkets();
+		getMarkets();
 	}, []);
 	useEffect(() => {
 		(async () => {
-			await bitpin.get('/mkt/markets/charts').then((res) =>
+			await api('/mkt/markets/charts', GET).then((res) =>
 				res.data.results.forEach((data) => {
 					if (data.code === params.code) {
 						return setCharts(data.chart);
@@ -121,6 +122,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	allMarkets: () => dispatch(allMarkets()),
+	getMarkets: () => dispatch(getMarkets()),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Transactions);
