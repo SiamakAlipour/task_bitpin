@@ -1,6 +1,6 @@
 .transactions {
 	margin-top: 20px;
-	&__currencyInfo {
+	&__currency-info {
 		background-color: #212529;
 		margin-bottom: 20px;
 		display: flex;
@@ -11,7 +11,7 @@
 		-webkit-box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.35);
 		box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.35);
 	}
-	&__currencyName {
+	&__currency-name {
 		background-color: #f44336;
 		padding: 7px;
 		border-radius: 5px;
@@ -21,12 +21,13 @@
 		> span {
 			direction: ltr;
 		}
+		&--positive {
+			background-color: #66bb6a;
+		}
 	}
 	// if it is positive style
-	.positive {
-		background-color: #66bb6a;
-	}
-	&__currencyPrice {
+
+	&__currency-price {
 		font-weight: bold;
 		color: whitesmoke;
 	}

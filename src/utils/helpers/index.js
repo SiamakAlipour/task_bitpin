@@ -1,19 +1,24 @@
-import { toggleFavorite } from 'store/actions/market';
-import { getCookie, setCookie } from 'utils/services/cookies';
+import { getCookie } from 'utils/services/cookies';
 
-export const handlePrice = (price) => {
-	let nf = new Intl.NumberFormat();
-	return nf.format(price);
+/**
+ * Takes a number and separated of numbers as string
+ * @example
+ * let a = 150005000
+ * let example = handlePrice(a); // example will be 15,000,5000
+ * @param {number} price
+ * @returns {string} separated of numbers as string
+ */
+export const formatPrice = (price) => {
+  const nf = new Intl.NumberFormat();
+  return nf.format(price);
 };
-export const handleAddFavorite = (id, market) => {
-	console.log(id);
-	toggleFavorite(id);
-	const cookie = getCookie('fav') ? getCookie('fav') : [];
-	setCookie('fav', [...cookie, { id }], 30);
-};
-export const handleRemoveFavorite = (id) => {
-	toggleFavorite(id);
-	const cookie = getCookie('fav') ? getCookie('fav') : [];
-	const newCookie = cookie.filter((cookie) => cookie.id !== id);
-	setCookie('fav', newCookie, 30);
+
+/**
+ * Takes an id and check if cookie is exist
+ * @param {*} id
+ * @return {boolean} return true if exist
+ */
+export const checkCookieExist = (id) => {
+  const cookies = getCookie('fav') || [];
+  return cookies.some((cookie) => cookie.id === id);
 };

@@ -1,4 +1,4 @@
-.marketCard {
+.market-card {
 	background-color: #eeeeee;
 	width: 400px !important;
 	height: 200px !important;
@@ -42,18 +42,18 @@
 		justify-content: space-between;
 
 		padding: 0 5px;
-		&MarketList {
-			margin-top: 15px;
-			margin-right: 15px;
-			font-size: 13px;
-			font-weight: 490;
+	}
+	&__market-list {
+		margin-top: 15px;
+		margin-right: 15px;
+		font-size: 13px;
+		font-weight: 490;
 
-			a {
-				color: #212121 !important;
-				text-decoration: none;
-			}
-			cursor: pointer;
+		a {
+			color: #212121 !important;
+			text-decoration: none;
 		}
+		cursor: pointer;
 	}
 }
 @media screen and (max-width: 770px) {

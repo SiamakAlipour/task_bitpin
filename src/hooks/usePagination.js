@@ -1,21 +1,45 @@
+/**
+ * usePagination will take items and current page
+ * then it will return an object with @param {Array} currentPosts for the current page
+ * and the @function paginate for Pagination component
+ */
+
 import { useState, useCallback } from 'react';
+import { POSTS_COUNT } from 'utils/constants/index';
 
-function usePagination(items, postPerPage) {
-	const [currentPage, setCurrentPage] = useState(1);
-	// const [currentPosts, setCurrentPosts] = useState(null);
-	const indexOfLastPost = currentPage * postPerPage;
-	const indexOfFirstPost = indexOfLastPost - postPerPage;
+/**
+ * checkPage
+ * @param {Array} items
+ * @param {number} page
+ * @returns {number}
+ * if the page is bigger than the lastPage
+ * and smaller than the firstPage it will return 1
+ */
 
-	const currentPosts = items?.slice(indexOfFirstPost, indexOfLastPost);
+const checkPage = (items, page) => {
+  const lastPage = Math.ceil(items.length / POSTS_COUNT);
+  if (page < 1 || page > lastPage) {
+    return 1;
+  }
+  return null;
+};
 
-	const paginate = useCallback(
-		(event, value) => {
-			setCurrentPage(value);
-		},
-		[setCurrentPage]
-	);
+function usePagination(items, page) {
+  const [currentPage, setCurrentPage] = useState(checkPage(items, parseInt(page, 10)) || 1);
 
-	return { currentPosts, paginate };
+  const indexOfLastPost = currentPage * POSTS_COUNT;
+  const indexOfFirstPost = indexOfLastPost - POSTS_COUNT;
+
+  const currentPosts = items.slice(indexOfFirstPost, indexOfLastPost);
+
+  const paginate = useCallback(
+    (event, value) => {
+      setCurrentPage(value);
+    },
+    [setCurrentPage],
+  );
+
+  return { currentPosts, currentPage, paginate };
 }
 
 export default usePagination;

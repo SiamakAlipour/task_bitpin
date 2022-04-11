@@ -1,7 +1,3 @@
-// Favorite actions types
-export const COOKIE_ADD = 'COOKIE_ADD';
-export const COOKIE_GET = 'COOKIE_GET';
-export const COOKIE_REMOVE = 'COOKIE_REMOVE';
 // Markets actions types
 export const MARKET_GET = 'MARKET_GET';
 export const MARKET_TOGGLEFAV = 'MARKET_TOGGLEFAV';
@@ -12,3 +8,5 @@ export const GET = 'GET';
 export const POST = 'POST';
 export const PATCH = 'PATCH';
 export const DELETE = 'DELETE';
+// Post per page
+export const POSTS_COUNT = 9;
