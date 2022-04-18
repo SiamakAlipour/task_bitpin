@@ -6,6 +6,7 @@ import { faGhost } from '@fortawesome/free-solid-svg-icons';
 import './_404.scss';
 // eslint-disable-next-line no-underscore-dangle
 function _404() {
+  console.log(1);
   return (
     <div className="_404">
       <h1>
