@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useReducer, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
@@ -75,10 +74,10 @@ function Transactions({ getMarkets, markets }) {
         <div className="transactions__currency-info">
           <div
             className={`transactions__currency-name ${
-              market.data.price_info?.change > 0 && 'transactions__currency-name--positive'
+              market.data.price_info.change > 0 && 'transactions__currency-name--positive'
             } `}
           >
-            {market.data.title_fa}: {`${market.data.price_info?.change}%`}
+            {market.data.title_fa}: {`${market.data.price_info.change}%`}
           </div>
           <div className="transactions__currency-price">
             آخرین قیمت : {formatPrice(market.data.price)}
@@ -99,7 +98,7 @@ function Transactions({ getMarkets, markets }) {
               <TransactionsItem
                 key={list.id}
                 id={index}
-                date={list?.date}
+                date={list.date}
                 type={list.type}
                 amount={list.amount}
                 description={list.description}
